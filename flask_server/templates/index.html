@@ -1,13 +1,23 @@
 <!doctype html>
-<title>{% block title %}{% endblock %} - Flaskr</title>
+<title>{% block title %}{% endblock %} Alaunus</title>
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<link rel="shortcut icon" href="{{ url_for('static', filename='lamp.ico') }}">
 <nav>
-  <h1>Flaskr</h1>
+  <h1>LED Tickler V.0.0.1</h1>
 </nav>
+<style>
+.button {
+    height: 600px;
+    width: 100%;
+    font-size: 100px;
+}
+</style>
 <body>
-  <form method="post" action="/">
-    <a href=# id=test><button class='btn btn-default'>Test</button></a>
-    <input type="submit" name="start" value="start" style="width: 60%; height: 35%;">
+  <form action="/turnon/" method="post">
+      <button class="button" type="submit">Turn on!</button>
+  </form>
+  <form action="/turnoff/" method="post">
+      <button class="button" type="submit">Turn off</button>
   </form>
 </body>
 <section class="content">
