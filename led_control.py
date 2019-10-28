@@ -175,20 +175,39 @@ def fade(strip, cycles, wait_ms=5):
             for i in range(strip.numPixels()):
                 strip.setPixelColor(i, Color(x, 255, 0))
             strip.show()
-            time.sleep(wait_ms/1000.0)
+            time.sleep(timeDelay/10000.0)
         for y in range(200, 0, -1):
             for i in range(strip.numPixels()):
                 strip.setPixelColor(i, Color(y, 255, 0))
             strip.show()
-            time.sleep(wait_ms/1000.0)
+            time.sleep(timeDelay/10000.0)
 
-def monitorServerUpdates():
-    print "Hi"
+def handleServerFIFO():
+    print "Opening FIFO for reading"
+    path = "/tmp/testpipe"
+    try:
+        os.remove(path)
+        os.mkfifo(path)
+        os.chmod(path, 0o777)
+    except:
+        print "FIFO already exists"
+    with open(path) as fifo:
+        print "FIFO opened"
+        while True:
+            data = fifo.read().decode(encoding='UTF-8')
+            if len(data) != 0:
+                global timeDelay 
+                timeDelay = int(data)
+                print 'Read: "{0}"'.format(data)
 
+
+import os
 import socket
 import sys
 import threading
 import fileinput
+
+timeDelay = 1000
 
 # Main program logic follows:
 if __name__ == '__main__':
@@ -207,19 +226,20 @@ if __name__ == '__main__':
         print "Performing colorwipe"
         colorWipe(strip, Color(0,0,0))
         sys.exit()
-
     elif args.music:
         serverThread = threading.Thread(target=musicServer, args=(strip,))
         serverThread.start()
     print ('Press Ctrl-C to quit.')
+    fifoThread = threading.Thread(target=handleServerFIFO, args=())
+    fifoThread.start()
     if not args.clear:
         print ('Use "-c" argument to clear LEDs on exit')
 
     try:
         while True:
-            fade(strip, 20, 25)
+            fade(strip, 20)
             simpleWave(strip, 0.01,5, 20, 10)
-            spreadout(strip, 55)
+            spreadout(strip)
             theaterChaseRainbow(strip)
             rainbow(strip)
             rainbowCycle(strip)

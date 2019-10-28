@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block script %}
+<script src="https://unpkg.com/promise-polyfill@7.1.2/dist/polyfill.min.js"></script>
+<script src="https://unpkg.com/whatwg-fetch@2.0.4/fetch.js"></script>
+<script>
+    const timeSlider = document.getElementById("timeSlider");
+    timeSlider.addEventListener('input', updateSlider);
+
+    const redSlider = document.getElementById("redSlider");
+    redSlider.addEventListener('input', updateSlider);
+
+    const greenSlider = document.getElementById("greenSlider");
+    greenSlider.addEventListener('input', updateSlider);
+
+    const blueSlider = document.getElementById("blueSlider");
+    blueSlider.addEventListener('input', updateSlider);
+
+    const colorBox = document.getElementById("colorBox");
+    function updateSlider(){
+        colorBox.style.background = `rgb(${redSlider.value}, ${greenSlider.value}, ${blueSlider.value})`;
+	if (this.id != "timeSlider"){
+		fetch({{ url_for('showSlide')|tojson }}, {
+		    method: 'POST',
+		    body: `${this.id} ${this.value}`
+		})
+	}
+	else{
+		fetch({{ url_for('showSlide')|tojson }}, {
+		    method: 'POST',
+		    body: `${this.value}`
+		})
+	}
+    }
+    function addSubmit(ev) {
+        ev.preventDefault();
+        fetch({{ url_for('add')|tojson }}, {
+            method: 'POST',
+            body: new FormData(this)
+        })
+            .then(parseJSON)
+            .then(addShow);
+    }
+
+    function parseJSON(response) {
+        return response.json();
+    }
+
+    function addShow(data) {
+        var span = document.getElementById('result');
+        span.innerText = data.result;
+    }
+
+var form = document.getElementById('calc');
+form.addEventListener('submit', addSubmit);
+</script>
+{% endblock %}

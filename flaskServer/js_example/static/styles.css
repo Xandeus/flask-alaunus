@@ -1,0 +1,20 @@
+/* Color Pallete
+Accent
+#fe938c
+Soft peach
+#e6b89c
+light peach
+#ead2ac
+highlight blue
+#9cafb7
+background blue
+#4281a4
+ */
+body {
+	background: #4281a4;
+}
+
+label {
+	color: #e6b89c;
+	font-size: 32pt;
+}
