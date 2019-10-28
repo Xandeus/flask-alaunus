@@ -13,6 +13,10 @@
 }
 </style>
 <body>
+  <script type=text/javascript src="{{
+  url_for('static', filename='js/main.js') }}"></script>
+	<p><a href=https://open.spotify.com/user/alexander.mckeever/playlist/6Fq1dpOYzcEwclxZddEI6X?si=mQ9bouRISVW7XN6BiCxMSA>Add to The Queue</a></p>
+  <input type="range" min="5" max="30" id="tippct" oninput="updateSlider(); calculateTotal(this);"> <span id="tipval"></span>
   <form action="/turnon/" method="post">
       <button class="button" type="submit">Turn on!</button>
   </form>
