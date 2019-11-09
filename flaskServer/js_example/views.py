@@ -21,6 +21,16 @@ def add():
     subprocess.Popen("./say_hello.sh")
     return jsonify(result=a + b)
 
+@app.route('/turnon', methods=['POST'])
+def turnOn():
+    subprocess.Popen("./send_command.sh")
+    return jsonify()
+
+@app.route('/turnoff', methods=['POST'])
+def turnOff():
+    subprocess.Popen("./send_stop.sh")
+    return jsonify()
+
 @app.route("/showSlide", methods=["POST"])
 def showSlide():
     print(request.data)

@@ -1,24 +1,12 @@
 <!doctype html>
 <title>LED Master Control</title>
-<link rel="stylesheet" type="text/css" href=/static/styles.css>
-<style>
-ul { margin: 0; padding: 0; list-style-type: none; }
-li > * { padding: 1em; }
-li.active > a { color: #5e5e5e; border-bottom: 2px solid #4a4a4a; }
-form { display: flex; }
-label > input { width: 3em; }
-form > * { padding-right: 1em; }
-#result { font-weight: bold; }
-.slider { width: 10em; }
-</style>
+<link rel="stylesheet" type="text/css" href="/static/styles.css?version=54">
 <h1 id="headTitle">LED Master Control Panel</h1>
 <hr>
 <p>{% block intro %}{% endblock %}</p>
 <hr>
-<button type="button">Turn on</button>
-<button type="button">Turn off</button>
 <div>
-	<label>time:  <input id="timeSlider"  type="range" class="slider" min="1" max="100" value=1></label>
+	<label>time:  <input id="timeSlider"  type="range" class="slider" min="1" max="2000" value=1></label>
 </div>
 <div id="colorSelect">
 	<label>RED:  <input id="redSlider"  type="range" class="slider" min="0" max="255" value=0></label>
@@ -36,4 +24,6 @@ form > * { padding-right: 1em; }
 		<li><input type="checkbox"> Rainbow</li>
 	</ul>
 </div>
+<button id="onButton" type="button" onclick="turnOn()">Turn on</button>
+<button id="offButton" type="button" onclick="turnOff()">Turn off</button>
 {% block script %}{% endblock %}

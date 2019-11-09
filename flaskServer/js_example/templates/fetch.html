@@ -19,19 +19,23 @@
     const colorBox = document.getElementById("colorBox");
     function updateSlider(){
         colorBox.style.background = `rgb(${redSlider.value}, ${greenSlider.value}, ${blueSlider.value})`;
-	if (this.id != "timeSlider"){
-		fetch({{ url_for('showSlide')|tojson }}, {
-		    method: 'POST',
-		    body: `${this.id} ${this.value}`
-		})
-	}
-	else{
-		fetch({{ url_for('showSlide')|tojson }}, {
-		    method: 'POST',
-		    body: `${this.value}`
-		})
-	}
+	fetch({{ url_for('showSlide')|tojson }}, {
+	    method: 'POST',
+	    body: `${this.id} ${this.value}`
+	})
     }
+    function turnOn() {
+        fetch({{ url_for('turnOn')|tojson }}, {
+            method: 'POST',
+        });
+    }
+
+    function turnOff() {
+        fetch({{ url_for('turnOff')|tojson }}, {
+            method: 'POST',
+        });
+    }
+
     function addSubmit(ev) {
         ev.preventDefault();
         fetch({{ url_for('add')|tojson }}, {

@@ -151,13 +151,14 @@ def randColor():
     return Color(random.randint(0,255),random.randint(0,255), random.randint(0, 255)) 
 
 # Define functions which animate LEDs in various ways.
-def randomColor(strip, color, wait_ms=50):
+def customColor(strip, wait_ms=50):
     """Wipe color across display a pixel at a time."""
-    for i in range(strip.numPixels()):
-        strip.setPixelColor(i, randColor())
-        #strip.setPixelBrightness(randColor())
-    strip.show()
-    time.sleep(wait_ms/1000.0)
+    print (greenSlider, redSlider, blueSlider)
+    for c in range(250):
+        for i in range(strip.numPixels()):
+            strip.setPixelColor(i, Color(greenSlider, redSlider, blueSlider))
+        strip.show()
+        time.sleep(wait_ms/1000.0)
 
 def simpleWave(strip, rate, cycles, scale, wait):
     pos=0.0;
@@ -197,7 +198,24 @@ def handleServerFIFO():
             data = fifo.read().decode(encoding='UTF-8')
             if len(data) != 0:
                 global timeDelay 
-                timeDelay = int(data)
+                global redSlider
+                global greenSlider
+                global blueSlider
+                vals = data.split()
+                print(vals)
+                try:
+                    if (vals[0] == "timeSlider" and int(vals[1]) <= 2000):
+                        timeDelay = vals[1]
+                    else:
+                        print "Setting sliders"
+                        if vals[0] == "redSlider":
+                            redSlider = int(vals[1])
+                        elif vals[0] == "blueSlider":
+                            blueSlider = int(vals[1])
+                        elif vals[0] == "greenSlider":
+                            greenSlider = int(vals[1])
+                except:
+                    print ""
                 print 'Read: "{0}"'.format(data)
 
 
@@ -208,6 +226,10 @@ import threading
 import fileinput
 
 timeDelay = 1000
+
+redSlider = 200
+greenSlider = 0
+blueSlider = 0
 
 # Main program logic follows:
 if __name__ == '__main__':
@@ -237,12 +259,17 @@ if __name__ == '__main__':
 
     try:
         while True:
+            print "CUSTOM COLOR START"
+            customColor(strip)
+            print "CUSTOM COLOR END"
+            """
             fade(strip, 20)
             simpleWave(strip, 0.01,5, 20, 10)
             spreadout(strip)
             theaterChaseRainbow(strip)
             rainbow(strip)
             rainbowCycle(strip)
+            """
                 
     except KeyboardInterrupt:
         if args.clear:
