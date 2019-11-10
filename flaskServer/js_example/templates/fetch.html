@@ -16,13 +16,42 @@
     const blueSlider = document.getElementById("blueSlider");
     blueSlider.addEventListener('input', updateSlider);
 
-    const colorBox = document.getElementById("colorBox");
+    const customColorCheckBox = document.getElementById("customColorCheckBox");
+    customColorCheckBox.addEventListener('input', updateCheckBox);
+
+    const fadeCheckBox = document.getElementById("fadeCheckBox");
+    fadeCheckBox.addEventListener('input', updateCheckBox);
+
+    const simpleWaveCheckBox = document.getElementById("simpleWaveCheckBox");
+    simpleWaveCheckBox.addEventListener('input', updateCheckBox);
+
+    const spreadoutCheckBox = document.getElementById("spreadoutCheckBox");
+    spreadoutCheckBox.addEventListener('input', updateCheckBox);
+
+    const theaterChaseRainbowCheckBox = document.getElementById("theaterChaseRainbowCheckBox");
+    theaterChaseRainbowCheckBox.addEventListener('input', updateCheckBox);
+
+    const rainbowCheckBox = document.getElementById("rainbowCheckBox");
+    rainbowCheckBox.addEventListener('input', updateCheckBox);
+
+    const rainbowCycleCheckBox = document.getElementById("rainbowCycleCheckBox");
+    rainbowCycleCheckBox.addEventListener('input', updateCheckBox);
+
     function updateSlider(){
+    	const colorBox = document.getElementById("colorBox");
         colorBox.style.background = `rgb(${redSlider.value}, ${greenSlider.value}, ${blueSlider.value})`;
 	fetch({{ url_for('showSlide')|tojson }}, {
 	    method: 'POST',
 	    body: `${this.id} ${this.value}`
-	})
+	});
+    }
+
+    function updateCheckBox(){
+	const numBool = this.checked ? 1 : 0;
+	fetch({{ url_for('showSlide')|tojson }}, {
+	    method: 'POST',
+	    body: `${this.id} ${numBool}`
+	});
     }
     function turnOn() {
         fetch({{ url_for('turnOn')|tojson }}, {

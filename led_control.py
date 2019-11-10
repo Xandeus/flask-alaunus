@@ -185,7 +185,7 @@ def fade(strip, cycles, wait_ms=5):
 
 def handleServerFIFO():
     print "Opening FIFO for reading"
-    path = "/tmp/testpipe"
+    path = "/home/pi/alaunus/fifopipes/testpipe"
     try:
         os.remove(path)
         os.mkfifo(path)
@@ -201,19 +201,41 @@ def handleServerFIFO():
                 global redSlider
                 global greenSlider
                 global blueSlider
+
+                # Check boxes
+                global customColorActive
+                global fadeActive
+                global simpleWaveActive
+                global spreadoutActive
+                global theaterChaseRainbowActive
+                global rainbowActive
+                global rainbowCycleActive
                 vals = data.split()
                 print(vals)
                 try:
                     if (vals[0] == "timeSlider" and int(vals[1]) <= 2000):
-                        timeDelay = vals[1]
+                        timeDelay = int(vals[1])
                     else:
-                        print "Setting sliders"
                         if vals[0] == "redSlider":
                             redSlider = int(vals[1])
                         elif vals[0] == "blueSlider":
                             blueSlider = int(vals[1])
                         elif vals[0] == "greenSlider":
                             greenSlider = int(vals[1])
+                        elif vals[0] == "customColorCheckBox":
+                            customColorActive = bool(int(vals[1]))
+                        elif vals[0] == "fadeCheckBox":
+                            fadeActive = bool(int(vals[1]))
+                        elif vals[0] == "simpleWaveCheckBox":
+                            simpleWaveActive = bool(int(vals[1]))
+                        elif vals[0] == "spreadoutCheckBox":
+                            spreadoutActive = bool(int(vals[1]))
+                        elif vals[0] == "theaterChaseRainbowCheckBox":
+                            theaterChaseRainbowActive = bool(int(vals[1]))
+                        elif vals[0] == "rainbowCheckBox":
+                            rainbowActive = bool(int(vals[1]))
+                        elif vals[0] == "rainbowCycleCheckBox":
+                            rainbowCycleActive = bool(int(vals[1]))
                 except:
                     print ""
                 print 'Read: "{0}"'.format(data)
@@ -226,6 +248,14 @@ import threading
 import fileinput
 
 timeDelay = 1000
+
+customColorActive = True
+fadeActive = True
+simpleWaveActive = True
+spreadoutActive = True
+theaterChaseRainbowActive = True
+rainbowActive = True
+rainbowCycleActive = True
 
 redSlider = 200
 greenSlider = 0
@@ -259,17 +289,22 @@ if __name__ == '__main__':
 
     try:
         while True:
-            print "CUSTOM COLOR START"
-            customColor(strip)
-            print "CUSTOM COLOR END"
-            """
-            fade(strip, 20)
-            simpleWave(strip, 0.01,5, 20, 10)
-            spreadout(strip)
-            theaterChaseRainbow(strip)
-            rainbow(strip)
-            rainbowCycle(strip)
-            """
+            # Check boxes
+            if (customColorActive):
+                customColor(strip)
+            print (customColorActive, fadeActive, simpleWaveActive, spreadoutActive, theaterChaseRainbowActive, rainbowActive, rainbowCycleActive)
+            if (fadeActive):
+                fade(strip, 20)
+            if (simpleWaveActive):
+                simpleWave(strip, 0.01,5, 20, 10)
+            if (spreadoutActive):
+                spreadout(strip)
+            if (theaterChaseRainbowActive):
+                theaterChaseRainbow(strip)
+            if (rainbowActive):
+                rainbow(strip)
+            if (rainbowCycleActive):
+                rainbowCycle(strip)
                 
     except KeyboardInterrupt:
         if args.clear:

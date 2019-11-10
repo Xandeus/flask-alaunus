@@ -34,7 +34,7 @@ def turnOff():
 @app.route("/showSlide", methods=["POST"])
 def showSlide():
     print(request.data)
-    path = "/tmp/testpipe"
+    path = "/home/pi/alaunus/fifopipes/testpipe"
     fifo = open(path, "w")
     fifo.write(request.data.decode(encoding='UTF-8'))
     fifo.close()
