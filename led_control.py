@@ -121,9 +121,9 @@ def music_leds(strip, music):
     for j in range(strip.numPixels()):
         strip.setPixelColor(j, Color(int(music[0]), int(music[0]), int(music[0])))
     strip.show()
-
+"""
 def theaterChaseRainbow(strip, wait_ms=50):
-    """Rainbow movie theater light style chaser animation."""
+    # Rainbow movie theater light style chaser animation.
     for j in range(256):
         for q in range(3):
             for i in range(0, strip.numPixels(), 3):
@@ -132,6 +132,18 @@ def theaterChaseRainbow(strip, wait_ms=50):
             time.sleep(wait_ms/1000.0)
             for i in range(0, strip.numPixels(), 3):
                 strip.setPixelColor(i+q, 0)
+"""
+
+def theaterChaseRainbow(strip, wait_ms=75):
+    """Rainbow movie theater light style chaser animation."""
+    for j in range(256):
+        for q in range(3):
+            for i in range(0, strip.numPixels(), 3):
+                strip.setPixelColor(i+q, Color(255, 0, 0))
+            strip.show()
+            time.sleep(wait_ms/1000.0)
+            for i in range(0, strip.numPixels(), 3):
+                strip.setPixelColor(i+q, Color(0, 255, 0))
 
 def spreadout(strip, wait_ms=20, iterations=5):
     middle = strip.numPixels()/2
@@ -174,12 +186,12 @@ def fade(strip, cycles, wait_ms=5):
     for c in range(cycles):
         for x in range(200):
             for i in range(strip.numPixels()):
-                strip.setPixelColor(i, Color(x, 255, 0))
+                strip.setPixelColor(i, Color(x, 200 - x, 0))
             strip.show()
             time.sleep(timeDelay/10000.0)
-        for y in range(200, 0, -1):
+        for y in range(200):
             for i in range(strip.numPixels()):
-                strip.setPixelColor(i, Color(y, 255, 0))
+                strip.setPixelColor(i, Color(200 - y, y, 0))
             strip.show()
             time.sleep(timeDelay/10000.0)
 
@@ -249,13 +261,13 @@ import fileinput
 
 timeDelay = 1000
 
-customColorActive = True
-fadeActive = True
-simpleWaveActive = True
-spreadoutActive = True
+customColorActive = False
+fadeActive = False
+simpleWaveActive = False
+spreadoutActive = False
 theaterChaseRainbowActive = True
-rainbowActive = True
-rainbowCycleActive = True
+rainbowActive = False
+rainbowCycleActive = False
 
 redSlider = 200
 greenSlider = 0
