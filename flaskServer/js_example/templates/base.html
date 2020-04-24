@@ -1,37 +1,40 @@
 <!doctype html>
 <title>LED Master Control</title>
 <link rel="shortcut icon" href="{{ url_for('static', filename='lamp.ico') }}">
-<link rel="stylesheet" type="text/css" href="/static/styles.css?version=71">
+<link rel="stylesheet" type="text/css" href="/static/styles.css?version=74">
+<div id="serverIP">Minecraft Server IP: 54.39.169.19:25625</div>
 <h1 id="headTitle">LED Master Control Panel</h1>
+<button id="onButton" type="button" onclick="turnOn()">Turn on</button>
+<button id="offButton" type="button" onclick="turnOff()">Turn off</button>
+<label class="switch">
+	<input type="checkbox">
+	<span class="slider round"></span>
+</label>
+<!-- Rounded switch -->
 <hr>
 <p>{% block intro %}{% endblock %}</p>
 <hr>
 <div>
-	<label>TIME:  <input id="timeSlider"  type="range" class="slider" min="1" max="2000" value=1></label>
+	<label>TIME:  <input id="timeSlider"  type="range"  class="slider" min="1" max="2000" value=1></label>
 </div>
 <div>
-	<label>RED:  <input id="redSlider"  type="range" class="slider" min="0" max="255" value=0></label>
+	<label>RED:  <input id="redSlider"  type="range"  class="slider" min="0" max="255" value=0></label>
 </div>
 <div>
-	<label>GREEN: <input id="greenSlider" type="range" class="slider" min="0" max="255" value=0></label>
+	<label>GREEN: <input id="greenSlider" type="range"  class="slider" min="0" max="255" value=0></label>
 </div>
 <div>
-	<label>BLUE: <input id="blueSlider" type="range" class="slider" min="0" max="255" value=0></label>
+	<label>BLUE: <input id="blueSlider" type="range"  class="slider" min="0" max="255" value=0></label>
 </div>
 <div id="colorBox" style="background: #000000; height: 10px;"></div>
 
 <div id="checkboxes">
-	<label>LED Cycles</label>
-	<ul>
-		<li><input id="customColorCheckBox" type="checkbox"> Custom Color</li>
-		<li><input id="fadeCheckBox" type="checkbox"> Color Fade</li>
-		<li><input id="simpleWaveCheckBox" type="checkbox"> Simple wave</li>
-		<li><input id="spreadoutCheckBox" type="checkbox"> Spreadout</li>
-		<li><input id="theaterChaseRainbowCheckBox" type="checkbox"> Theater Chase Rainbow</li>
-		<li><input id="rainbowCheckBox" type="checkbox"> Rainbow</li>
-		<li><input id="rainbowCycleCheckBox" type="checkbox"> Rainbow cycle</li>
-	</ul>
+	<div><input id="customColorCheckBox" type="checkbox"> Custom Color</div>
+	<div><input id="fadeCheckBox" type="checkbox"> Color Fade</div>
+	<div><input id="simpleWaveCheckBox" type="checkbox"> Simple wave</div>
+	<div><input id="spreadoutCheckBox" type="checkbox"> Spreadout</div>
+	<div><input id="theaterChaseRainbowCheckBox" type="checkbox"> Theater Chase Rainbow</div>
+	<div><input id="rainbowCheckBox" type="checkbox"> Rainbow</div>
+	<div><input id="rainbowCycleCheckBox" type="checkbox"> Rainbow cycle</div>
 </div>
-<button id="onButton" type="button" onclick="turnOn()">Turn on</button>
-<button id="offButton" type="button" onclick="turnOff()">Turn off</button>
 {% block script %}{% endblock %}

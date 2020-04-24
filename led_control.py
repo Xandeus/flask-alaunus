@@ -5,6 +5,7 @@
 # Direct port of the Arduino NeoPixel library strandtest example.  Showcases
 # various animations on a strip of NeoPixels.
 
+from functools import wraps
 import math
 import random
 import time
@@ -121,7 +122,7 @@ def music_leds(strip, music):
     for j in range(strip.numPixels()):
         strip.setPixelColor(j, Color(int(music[0]), int(music[0]), int(music[0])))
     strip.show()
-"""
+
 def theaterChaseRainbow(strip, wait_ms=50):
     # Rainbow movie theater light style chaser animation.
     for j in range(256):
@@ -132,10 +133,11 @@ def theaterChaseRainbow(strip, wait_ms=50):
             time.sleep(wait_ms/1000.0)
             for i in range(0, strip.numPixels(), 3):
                 strip.setPixelColor(i+q, 0)
-"""
 
-def theaterChaseRainbow(strip, wait_ms=75):
-    """Rainbow movie theater light style chaser animation."""
+"""
+#Christmas style
+#def theaterChaseRainbow(strip, wait_ms=75):
+    # Rainbow movie theater light style chaser animation.
     for j in range(256):
         for q in range(3):
             for i in range(0, strip.numPixels(), 3):
@@ -144,6 +146,7 @@ def theaterChaseRainbow(strip, wait_ms=75):
             time.sleep(wait_ms/1000.0)
             for i in range(0, strip.numPixels(), 3):
                 strip.setPixelColor(i+q, Color(0, 255, 0))
+"""
 
 def spreadout(strip, wait_ms=20, iterations=5):
     middle = strip.numPixels()/2
@@ -165,7 +168,6 @@ def randColor():
 # Define functions which animate LEDs in various ways.
 def customColor(strip, wait_ms=50):
     """Wipe color across display a pixel at a time."""
-    print (greenSlider, redSlider, blueSlider)
     for c in range(250):
         for i in range(strip.numPixels()):
             strip.setPixelColor(i, Color(greenSlider, redSlider, blueSlider))
@@ -186,14 +188,14 @@ def fade(strip, cycles, wait_ms=5):
     for c in range(cycles):
         for x in range(200):
             for i in range(strip.numPixels()):
-                strip.setPixelColor(i, Color(x, 200 - x, 0))
+                strip.setPixelColor(i, Color(x, x/2, 255))
             strip.show()
-            time.sleep(timeDelay/10000.0)
+            time.sleep(timeDelay/100000.0)
         for y in range(200):
             for i in range(strip.numPixels()):
-                strip.setPixelColor(i, Color(200 - y, y, 0))
+                strip.setPixelColor(i, Color(200 - y, (200 - y)/2, 255))
             strip.show()
-            time.sleep(timeDelay/10000.0)
+            time.sleep(timeDelay/100000.0)
 
 def handleServerFIFO():
     print "Opening FIFO for reading"
@@ -214,6 +216,9 @@ def handleServerFIFO():
                 global greenSlider
                 global blueSlider
 
+                global fadeColorFrom
+                global fadeColorTo
+
                 # Check boxes
                 global customColorActive
                 global fadeActive
@@ -233,6 +238,10 @@ def handleServerFIFO():
                         elif vals[0] == "blueSlider":
                             blueSlider = int(vals[1])
                         elif vals[0] == "greenSlider":
+                            greenSlider = int(vals[1])
+                        elif vals[0] == "fadeColorFrom":
+                            blueSlider = int(vals[1])
+                        elif vals[0] == "fadeColorTo":
                             greenSlider = int(vals[1])
                         elif vals[0] == "customColorCheckBox":
                             customColorActive = bool(int(vals[1]))
@@ -262,16 +271,17 @@ import fileinput
 timeDelay = 1000
 
 customColorActive = False
-fadeActive = False
-simpleWaveActive = False
-spreadoutActive = False
+fadeActive = True
+simpleWaveActive = True
+spreadoutActive = True
 theaterChaseRainbowActive = True
-rainbowActive = False
-rainbowCycleActive = False
+rainbowActive = True
+rainbowCycleActive = True
 
-redSlider = 200
+redSlider = 255
 greenSlider = 0
 blueSlider = 0
+
 
 # Main program logic follows:
 if __name__ == '__main__':

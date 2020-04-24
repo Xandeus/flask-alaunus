@@ -16,35 +16,108 @@ li.active > a { color: #5e5e5e; border-bottom: 2px solid #4a4a4a; }
 form { display: flex; }
 label > input { width: 3em; }
 form > * { padding-right: 1em; }
-#result { font-weight: bold; }
-.slider {
-	-webkit-appearance: none;
-	width: 50%;
-	height: 75px;
-	border-radius: 30px;
-	background: #9cafb7;
-	padding: 10px;
-	outline: none;
-	opacity: 0.7;
-	-webkit-transition: .2s;
-	transition: opacity .2s;
+/* The switch - the box around the slider */
+.switch {
+	position: relative;
+	display: inline-block;
+	width: 60px;
+	height: 34px;
 }
 
-.slider::-webkit-slider-thumb {
+/* Hide default HTML checkbox */
+.switch input {
+	opacity: 0;
+	width: 0;
+	height: 0;
+}
+
+/* The slider */
+.switch .slider {
+	position: absolute;
+	cursor: pointer;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: #ccc;
+	-webkit-transition: .4s;
+	transition: .4s;
+}
+
+.switch .slider:before {
+	position: absolute;
+	content: "";
+	height: 26px;
+	width: 26px;
+	left: 4px;
+	bottom: 4px;
+	background-color: white;
+	-webkit-transition: .4s;
+	transition: .4s;
+}
+
+input:checked + .slider {
+	background-color: #2196F3;
+}
+
+input:focus + .slider {
+	box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+	-webkit-transform: translateX(26px);
+	-ms-transform: translateX(26px);
+	transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+	border-radius: 34px;
+}
+
+.slider.round:before {
+	border-radius: 50%;
+} 
+#result { font-weight: bold; }
+/* Webkit */
+.safari input[type=range],
+.chrome input[type=range], 
+.opera input[type=range] {
 	-webkit-appearance: none;
-	appearance: none;
-	width: 100px;
-	height:100px;
-	border-radius: 50%; 
-	background: #4CAF50;
+	width: 100%;
+	border-radius: 8px;
+	height: 7px;
+	border: 1px solid #bdc3c7;
+	background-color: #fff; 
+}
+.safari input[type='range']::-webkit-slider-thumb,
+.chrome input[type='range']::-webkit-slider-thumb,
+.opera input[type='range']::-webkit-slider-thumb {
+	-webkit-appearance: none;
+	background-color: #ecf0f1;
+	border: 1px solid #bdc3c7;
+	width: 20px;
+	height: 20px;
+	border-radius: 10px;
 	cursor: pointer;
 }
 
-.slider::-moz-range-thumb {
-	width: 100px;
-	height:100px;
-	border-radius: 50%;
-	background: #9cafb7;
+/* Mozilla */
+.firefox input[type=range] {
+	width: 100%;
+}
+.firefox input[type=range]::-moz-range-track {
+	border-radius: 8px;
+	height: 7px;
+	border: 1px solid #bdc3c7;
+	background-color: #fff;
+}
+.firefox input[type=range]::-moz-range-thumb {
+	background: #ecf0f1;
+	border: 1px solid #bdc3c7;
+	width: 20px;
+	height: 20px;
+	border-radius: 10px;
 	cursor: pointer;
 }
 body {
@@ -57,14 +130,14 @@ label {
 }
 
 #onButton {
-	position: sticky; 
+	-webkit-appearance: none;
 	font-size: 100pt; 
 	bottom: 10%; 
 	height:25%; 
 	width: 100%;
 }
 #offButton {
-	position: sticky; 
+	-webkit-appearance: none;
 	font-size: 100pt; 
 	bottom: 0%; 
 	height:25%; 
@@ -77,3 +150,44 @@ input[type=checkbox] {
 	-webkit-transform: scale(20); /* Safari and Chrome */
 	-o-transform: scale(20); /* Opera */
 }
+#checkboxes {
+	  display: grid;
+	  grid-template-columns: repeat(3, 1fr);
+	  grid-gap: 10px;
+	  grid-auto-rows: minmax(100px, auto);
+  }
+	<div><input id="customColorCheckBox" type="checkbox"> Custom Color</div>
+	<div><input id="fadeCheckBox" type="checkbox"> Color Fade</div>
+	<div><input id="simpleWaveCheckBox" type="checkbox"> Simple wave</div>
+	<div><input id="spreadoutCheckBox" type="checkbox"> Spreadout</div>
+	<div><input id="theaterChaseRainbowCheckBox" type="checkbox"> Theater Chase Rainbow</div>
+	<div><input id="rainbowCheckBox" type="checkbox"> Rainbow</div>
+	<div><input id="rainbowCycleCheckBox" type="checkbox"> Rainbow cycle</div>
+  #customColorCheckBox {
+	  grid-column: 1;
+	  grid-row: 1;
+  }
+  #fadeCheckBox { 
+	  grid-column: 2;
+	  grid-row: 1;
+  }
+  #simpleWaveCheckBox {
+	  grid-column: 3;
+	  grid-row: 1;
+  }
+  #spreadoutCheckBox{
+	  grid-column: 1;
+	  grid-row: 2;
+  }
+  #theaterChaseRainbowCheckBox {
+	  grid-column: 2;
+	  grid-row: 2;
+  }
+  #rainbowCheckBox{
+	  grid-column: 3;
+	  grid-row: 2;
+  }
+  #rainbowCycleCheckBox{
+	  grid-column: 1;
+	  grid-row: 3;
+  }
